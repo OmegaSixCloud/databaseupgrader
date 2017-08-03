@@ -2,8 +2,9 @@ version: 0.2
 
 env:
   variables:
-    LIBNAME: "DatabaseUpgrader"
+    LIBNAME: "databaseUpgrader"
     MAJOR_VERSION: "1"
+    GROUP_ID: "database"
 phases:
   pre_build:
     commands:
@@ -12,8 +13,9 @@ phases:
   build:
     commands:
       - mvn package
-      - export ARTIFACT=$LIBNAME-$MAJOR_VERSION.$BUILD_NUMBER.jar
+      - export VERSION=$MAJOR_VERSION.$BUILD_NUMBER
+      - export ARTIFACT=$LIBNAME-$VERSION.jar
       - mv ./target/*.jar ./$ARTIFACT
   post_build:
     commands:
-      - aws s3 cp $ARTIFACT s3://com.omegasixcloud.artifacts/$LIBNAME/$ARTIFACT
+      - aws s3 cp $ARTIFACT s3://com.omegasixcloud.artifacts/$GROUP_ID/$LIBNAME/$VERSION/$ARTIFACT
