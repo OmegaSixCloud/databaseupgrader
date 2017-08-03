@@ -19,3 +19,4 @@ phases:
   post_build:
     commands:
       - aws s3 cp $ARTIFACT s3://com.omegasixcloud.artifacts/$GROUP_ID/$LIBNAME/$VERSION/$ARTIFACT
+      - aws s3 cp pom.xml s3://com.omegasixcloud.artifacts/$GROUP_ID/$LIBNAME/$VERSION/pom.xml
