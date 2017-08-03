@@ -3,6 +3,7 @@ version: 0.2
 env:
   variables:
     LIBNAME: "DatabaseUpgrader"
+    MAJOR_VERSION: "1"
 phases:
   pre_build:
     commands:
@@ -10,13 +11,12 @@ phases:
       - export BUILD_NUMBER="$(curl -s https://pfg5vswacc.execute-api.us-east-1.amazonaws.com/prod/buildnumber/$LIBNAME)"
   build:
     commands:
-      - docker build -t $SERVICE:$BUILD_NUMBER .
-      - docker tag $SERVICE:$BUILD_NUMBER $IMAGE_REPO/$SERVICE:$BUILD_NUMBER
-      - docker push $IMAGE_REPO/$SERVICE:$BUILD_NUMBER
+      - maven package
+      - export ARTIFACT=$LIBNAME-$MAJOR_VERSION.$BUILD_NUMBER.jar
+      - mv ./target/*.jar ./$LIBNAME-$MAJOR_VERSION.$BUILD_NUMBER.jar
   post_build:
     commands:
-      - sed -e "s/\${repo}/$IMAGE_REPO/" -e "s/\${image}/$SERVICE/" -e "s/\${tag}/$BUILD_NUMBER/" Build/elasticbeanstalk.json >> Dockerrun.aws.json
+      - aws s3 cp $ARTIFACT s3://com.omegasixcloud.artifacts/$LIBNAME
 artifacts:
   files:
-    - Dockerrun.aws.json
-    - .ebextensions/**/*
+    - ARTIFACT
