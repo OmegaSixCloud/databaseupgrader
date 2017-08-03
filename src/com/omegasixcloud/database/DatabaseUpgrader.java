@@ -1,4 +1,4 @@
-package com.omegasixcloud.catalogservice.common;
+package com.omegasixcloud.database;
 
 import com.google.common.io.Resources;
 
