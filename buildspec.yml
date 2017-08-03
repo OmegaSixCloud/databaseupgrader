@@ -17,6 +17,3 @@ phases:
   post_build:
     commands:
       - aws s3 cp $ARTIFACT s3://com.omegasixcloud.artifacts/$LIBNAME/$ARTIFACT
-artifacts:
-  files:
-    - ARTIFACT
