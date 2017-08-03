@@ -13,10 +13,10 @@ phases:
     commands:
       - mvn package
       - export ARTIFACT=$LIBNAME-$MAJOR_VERSION.$BUILD_NUMBER.jar
-      - mv ./target/*.jar ./$LIBNAME-$MAJOR_VERSION.$BUILD_NUMBER.jar
+      - mv ./target/*.jar ./$ARTIFACT
   post_build:
     commands:
-      - aws s3 cp $ARTIFACT s3://com.omegasixcloud.artifacts/$LIBNAME
+      - aws s3 cp $ARTIFACT s3://com.omegasixcloud.artifacts/$LIBNAME/$ARTIFACT
 artifacts:
   files:
     - ARTIFACT
