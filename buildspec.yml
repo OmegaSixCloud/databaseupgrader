@@ -1,0 +1,22 @@
+version: 0.2
+
+env:
+  variables:
+    LIBNAME: "DatabaseUpgrader"
+phases:
+  pre_build:
+    commands:
+      - echo $LIBNAME
+      - export BUILD_NUMBER="$(curl -s https://pfg5vswacc.execute-api.us-east-1.amazonaws.com/prod/buildnumber/$LIBNAME)"
+  build:
+    commands:
+      - docker build -t $SERVICE:$BUILD_NUMBER .
+      - docker tag $SERVICE:$BUILD_NUMBER $IMAGE_REPO/$SERVICE:$BUILD_NUMBER
+      - docker push $IMAGE_REPO/$SERVICE:$BUILD_NUMBER
+  post_build:
+    commands:
+      - sed -e "s/\${repo}/$IMAGE_REPO/" -e "s/\${image}/$SERVICE/" -e "s/\${tag}/$BUILD_NUMBER/" Build/elasticbeanstalk.json >> Dockerrun.aws.json
+artifacts:
+  files:
+    - Dockerrun.aws.json
+    - .ebextensions/**/*
