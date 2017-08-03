@@ -11,7 +11,7 @@ phases:
       - export BUILD_NUMBER="$(curl -s https://pfg5vswacc.execute-api.us-east-1.amazonaws.com/prod/buildnumber/$LIBNAME)"
   build:
     commands:
-      - maven package
+      - mvn package
       - export ARTIFACT=$LIBNAME-$MAJOR_VERSION.$BUILD_NUMBER.jar
       - mv ./target/*.jar ./$LIBNAME-$MAJOR_VERSION.$BUILD_NUMBER.jar
   post_build:
