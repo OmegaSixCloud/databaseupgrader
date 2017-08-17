@@ -105,6 +105,10 @@ public class DatabaseUpgrader {
             for(String sql : sqls)
             {
                 currentSql = sql;
+                if(!currentSql.endsWith(";"))
+                {
+                    currentSql = currentSql + ";";
+                }
                 System.out.println("Running SQL:\n" + currentSql);
                 PreparedStatement ps = conn.prepareStatement(currentSql);
                 ps.execute();
