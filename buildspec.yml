@@ -4,7 +4,7 @@ env:
   variables:
     LIBNAME: "databaseUpgrader"
     MAJOR_VERSION: "1"
-    GROUP_ID: "database"
+    GROUP_ID: "com/omegasixcloud"
 phases:
   pre_build:
     commands:
@@ -19,5 +19,6 @@ phases:
       - mv ./target/*.jar ./$ARTIFACT
   post_build:
     commands:
-      - aws s3 cp $ARTIFACT s3://com.omegasixcloud.artifacts/$GROUP_ID/$LIBNAME/$VERSION/$ARTIFACT
-      - aws s3 cp pom.xml s3://com.omegasixcloud.artifacts/$GROUP_ID/$LIBNAME/$VERSION/$ARTIFACT_NAME.pom
+      - export UPLOAD_PATH=s3://com.omegasixcloud.artifacts/$GROUP_ID/$LIBNAME/$VERSION
+      - aws s3 cp $ARTIFACT $UPLOAD_PATH/$ARTIFACT
+      - aws s3 cp pom.xml $UPLOAD_PATH/$ARTIFACT_NAME.pom
