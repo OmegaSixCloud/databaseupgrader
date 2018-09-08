@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import java.sql.Types;
 
 /**
- * Created by amcde on 9/23/2017.
+ * Created by amcdevitt on 9/23/2017.
  */
 public class QueryParameter {
 
