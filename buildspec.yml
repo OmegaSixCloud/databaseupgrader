@@ -2,8 +2,8 @@ version: 0.2
 
 env:
   variables:
-    LIBNAME: "databaseUpgrader"
-    MAJOR_VERSION: "1"
+    LIBNAME: "databaseUtils"
+    MAJOR_VERSION: "2"
     GROUP_ID: "com/omegasixcloud"
 phases:
   pre_build:
