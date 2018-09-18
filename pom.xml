@@ -5,7 +5,7 @@
     <groupId>com.omegasixcloud</groupId>
     <artifactId>database.utils</artifactId>
     <packaging>jar</packaging>
-    <version>1</version>
+    <version>2</version>
     <properties>
     </properties>
     
